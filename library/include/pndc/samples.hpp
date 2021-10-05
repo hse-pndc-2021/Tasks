@@ -12,7 +12,7 @@ public:
 
     std::vector<int> serial_ints(size_t n) {
         int counter = 0;
-        return generate_ints(n, [&counter] { return ++counter; });
+        return generate_ints(n, [&counter]() mutable { return ++counter; });
     }
 
 private:

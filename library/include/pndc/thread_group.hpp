@@ -2,6 +2,7 @@
 
 #include <concepts>
 #include <functional>
+#include <future>
 #include <vector>
 #include <memory>
 #include <chrono>
@@ -70,10 +71,25 @@ public:
 
     template<std::invocable T>
     void thread(T func) {
-        threads_.emplace_back([func = std::move(func), completion = completion_latch_] {
+        threads_.emplace_back([func = std::move(func), completion = completion_latch_]() mutable {
             std::invoke(std::move(func));
             completion->satisfy();
         });
+    }
+
+    template<std::invocable T, class R = std::invoke_result_t<T>>
+    std::future<R> async(T func) {
+        std::promise<R> promise{};
+        std::future<R> future = promise.get_future();
+        thread([func = std::move(func), promise = std::move(promise)]() mutable {
+            if constexpr (std::is_same_v<R, void>) {
+                std::invoke(std::move(func));
+                promise.set_value();
+            } else {
+                promise.set_value(std::invoke(std::move(func)));
+            }
+        });
+        return future;
     }
 
     template<class Rep, class Period>
