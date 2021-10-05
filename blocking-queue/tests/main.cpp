@@ -15,15 +15,15 @@ TEST(BlockingQueueTests, SingleProducerSingleConsumer) {
     pndc::testing::ThreadGroup threads;
     pndc::testing::SampleGenerator sample_gen;
 
-    const auto samples = sample_gen.next_samples(1'000'000);
-    BlockingQueue queue(10);
+    const auto samples = sample_gen.random_ints(1'000'000);
+    BlockingQueue<int> queue(10);
 
-    threads.thread([&samples] {
+    threads.thread([&samples, &queue] {
         for (int v : samples) {
             queue.put(v);
         }
     });
-    threads.thread([&samples] {
+    threads.thread([&samples, &queue] {
         size_t i = 0;
         std::optional<int> got;
         while ((got = queue.take()).has_value()) {
@@ -31,5 +31,6 @@ TEST(BlockingQueueTests, SingleProducerSingleConsumer) {
         }
     });
 
-    threads.await_completion(1s);
+    bool completed = threads.await_completion(2s);
+    ASSERT_TRUE(completed) << "Timeout exceeded" << std::endl;
 }

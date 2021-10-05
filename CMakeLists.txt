@@ -19,13 +19,23 @@ function (make_task name)
     endif()
 endfunction()
 
-function (make_test name)
+function (make_test_executable name)
     add_executable("${name}" ${ARGN})
     target_link_libraries("${name}" PRIVATE Threads::Threads gtest_main pndc)
     target_compile_options("${name}" PRIVATE
             $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
             $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Werror>)
     add_test(NAME "${name}" COMMAND "${name}")
+endfunction()
+
+function (make_test name)
+    make_test_executable("${name}" ${ARGN})
+    make_test_executable("${name}_ASAN" ${ARGN})
+    target_compile_options("${name}_ASAN" PRIVATE "-fsanitize=address")
+    target_link_options("${name}_ASAN" PRIVATE "-fsanitize=address")
+    make_test_executable("${name}_TSAN" ${ARGN})
+    target_compile_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
+    target_link_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
 endfunction()
 
 make_task("blocking-queue")

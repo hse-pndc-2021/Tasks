@@ -1,6 +1,7 @@
 #pragma once
 
 #include <concepts>
+#include <functional>
 #include <vector>
 #include <memory>
 #include <chrono>
@@ -70,7 +71,7 @@ public:
     template<std::invocable T>
     void thread(T func) {
         threads_.emplace_back([func = std::move(func), completion = completion_latch_] {
-            std::move(func)();
+            std::invoke(std::move(func));
             completion->satisfy();
         });
     }

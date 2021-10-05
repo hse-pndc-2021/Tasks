@@ -32,7 +32,7 @@ public:
         // your code here
     }
 
-    bool isClosed() {
+    bool is_closed() {
         // your code here
     }
 
