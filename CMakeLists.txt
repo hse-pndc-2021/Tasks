@@ -26,6 +26,7 @@ function (make_test_executable name)
             $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
             $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Werror>)
     add_test(NAME "${name}" COMMAND "${name}")
+    set_tests_properties("${name}" PROPERTIES TIMEOUT 30)
 endfunction()
 
 function (make_test name)
@@ -33,9 +34,13 @@ function (make_test name)
     make_test_executable("${name}_ASAN" ${ARGN})
     target_compile_options("${name}_ASAN" PRIVATE "-fsanitize=address")
     target_link_options("${name}_ASAN" PRIVATE "-fsanitize=address")
+    target_compile_definitions("${name}_ASAN" PRIVATE TIMEOUT_SCALE_MULTIPLIER=3)
     make_test_executable("${name}_TSAN" ${ARGN})
     target_compile_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
+    target_compile_definitions("${name}_TSAN" PRIVATE TIMEOUT_SCALE_MULTIPLIER=10)
     target_link_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
 endfunction()
+
+#################################################
 
 make_task("blocking-queue")

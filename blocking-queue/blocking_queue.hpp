@@ -20,7 +20,7 @@ public:
         // your code here
     }
 
-    bool offer(T element) {
+    [[nodiscard]] bool offer(T element) {
         // your code here
     }
 
@@ -32,12 +32,12 @@ public:
         // your code here
     }
 
-    bool is_closed() {
+    [[nodiscard]] bool is_closed() const { // const may be removed if hard to support
         // your code here
     }
 
 private:
-    std::deque<T> container_;
+    std::deque<T> container_{};
     size_t max_size_;
     // your code here
 };
