@@ -3,6 +3,10 @@
 
 В этом репозитории будут публиковаться условия домашних заданий и тесты для них. Из него же через GitHub Classroom создаются ваши репозитории для сдачи.
 
+# Задачи
+
+1. [blocking-queue](https://github.com/hse-pndc-2021/Tasks/tree/master/blocking-queue)
+
 # Подготовка окружения
 
 Поскольку Classroom использует неудобный механизм шаблонов, придётся выполнить дополнительные шаги по настройке окружения.
@@ -70,11 +74,13 @@ CXX=clang-11 cmake -DTASK=task-name ..
 
 * Создайте ветку `task-name`, где `task-name` &mdash; название задачи.
 * Закомитте в неё файлы с решением и сделайте пуш в свой репозиторий.
-    ```sh
+
+```sh
 git add task-name/file.cpp
 git commit -m "Message does not matter"
 git push -u origin task-name
-    ```
+```
+
 * Откройте pull request в master.
 * О новых реквестах приходят уведомления, писать в личку преподавателю не надо.
 
