@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 11)
 
 set(TASK "" CACHE STRING "Task id")
+option(DISABLE_SANITIZERS "Disable address and thread sanitizer tests" OFF)
 
 find_package(Threads REQUIRED)
 include(cmake/Gtest.cmake)
@@ -31,14 +32,18 @@ endfunction()
 
 function (make_test name)
     make_test_executable("${name}" ${ARGN})
-    make_test_executable("${name}_ASAN" ${ARGN})
-    target_compile_options("${name}_ASAN" PRIVATE "-fsanitize=address")
-    target_link_options("${name}_ASAN" PRIVATE "-fsanitize=address")
-    target_compile_definitions("${name}_ASAN" PRIVATE TIMEOUT_SCALE_MULTIPLIER=3)
-    make_test_executable("${name}_TSAN" ${ARGN})
-    target_compile_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
-    target_compile_definitions("${name}_TSAN" PRIVATE TIMEOUT_SCALE_MULTIPLIER=10)
-    target_link_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
+
+    if (NOT DISABLE_SANITIZERS)
+        make_test_executable("${name}_ASAN" ${ARGN})
+        target_compile_options("${name}_ASAN" PRIVATE "-fsanitize=address")
+        target_link_options("${name}_ASAN" PRIVATE "-fsanitize=address")
+        target_compile_definitions("${name}_ASAN" PRIVATE TIMEOUT_SCALE_MULTIPLIER=3)
+
+        make_test_executable("${name}_TSAN" ${ARGN})
+        target_compile_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
+        target_link_options("${name}_TSAN" PRIVATE "-fsanitize=thread")
+        target_compile_definitions("${name}_TSAN" PRIVATE TIMEOUT_SCALE_MULTIPLIER=10)
+    endif()
 endfunction()
 
 #################################################
