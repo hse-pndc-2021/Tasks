@@ -6,7 +6,6 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
-#include <latch>
 #include <unordered_set>
 #include <optional>
 #include <chrono>

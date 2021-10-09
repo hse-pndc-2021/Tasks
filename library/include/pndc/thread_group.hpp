@@ -1,6 +1,5 @@
 #pragma once
 
-#include <concepts>
 #include <functional>
 #include <future>
 #include <vector>
@@ -69,7 +68,7 @@ public:
 
     ThreadGroup& operator=(ThreadGroup&&) = default;
 
-    template<std::invocable T>
+    template<class T>
     void thread(T func) {
         threads_.emplace_back([func = std::move(func), completion = completion_latch_]() mutable {
             std::invoke(std::move(func));
@@ -77,7 +76,7 @@ public:
         });
     }
 
-    template<std::invocable T, class R = std::invoke_result_t<T>>
+    template<class T, class R = std::invoke_result_t<T>>
     std::future<R> async(T func) {
         std::promise<R> promise{};
         std::future<R> future = promise.get_future();
