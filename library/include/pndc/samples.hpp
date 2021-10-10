@@ -16,7 +16,7 @@ public:
     }
 
 private:
-    template<std::invocable F>
+    template<class F>
     std::vector<int> generate_ints(size_t n, F generator) {
         std::vector<int> res(n, 0);
         std::generate(res.begin(), res.end(), std::move(generator));
