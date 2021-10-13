@@ -23,6 +23,7 @@
   git remote add super https://github.com/hse-pndc-2021/Tasks.git
   git fetch --all
   git reset --hard super/master
+  git push -f origin master
   ```
   **Важно выполнить эти шаги до внесения любых изменений!**
 
