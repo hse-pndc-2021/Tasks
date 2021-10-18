@@ -40,7 +40,7 @@ git pull --rebase super
 
 Убедитесь, что у вас установлены
 
-* gcc 10.2+ или clang 10+
+* gcc 11+ или clang 11+
 * cmake 3.15+
 
 В gcc возможны ложные срабатывания thread sanitizer'а. Если вы с этим столкнулись, попробуйте clang.
