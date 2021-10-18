@@ -6,6 +6,7 @@
 # Задачи
 
 1. [blocking-queue](https://github.com/hse-pndc-2021/Tasks/tree/master/blocking-queue)
+2. [mutex](https://github.com/hse-pndc-2021/Tasks/tree/master/mutex)
 
 # Подготовка окружения
 
@@ -41,6 +42,8 @@ git pull --rebase super
 
 * gcc 10.2+ или clang 10+
 * cmake 3.15+
+
+В gcc возможны ложные срабатывания thread sanitizer'а. Если вы с этим столкнулись, попробуйте clang.
 
 После этого собрать тесты для задачи `task-name` можно так:
 
