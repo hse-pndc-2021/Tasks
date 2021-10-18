@@ -1,5 +1,6 @@
 #pragma once
 
+#include <pndc/cpu.hpp>
 
 class Mutex {
 public:
