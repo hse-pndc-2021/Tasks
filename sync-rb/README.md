@@ -17,6 +17,14 @@ wait delta
 // by now all correct processes received m
 ```
 
+Если процесс отправил сообщение и упал раньше, чем прошло Δ, то сообщение могло как дойти, так и потеряться.
+
+```pseudocode
+send m to all processes
+// assume the sender crashed right after invocation of send
+// some processes received m while others didn't
+```
+
 
 
 *Message complexity* &mdash; общее количество unicast-сообщений, отправляемых в процессе работы алгоритма.
@@ -30,13 +38,15 @@ wait delta
 # Задание
 
 1. Придумайте алгоритм reliable broadcast для синхронной системы с optimistic message complexity O(n).
+   
    За этот пункт вы получите 3 балла.
 
 2. Доработайте алгоритм из пункта 1, чтобы получился uniform reliable broadcast. Optimistic message complexity должно остаться O(n). Сравните отказоустойчивость получившегося алгоритма с отказоустойчивостью асинхронного uniform reliable broadcast.
+   
    За этот пункт вы получите ещё 2 балла.
 
 # Сдача
 
-В этом задании вам нужно описать алгоритмы словами. Решения принимаются в форматах pdf и markdown.
+В этом задании вам нужно описать алгоритмы текстом или псевдокодом. Решения принимаются в форматах pdf и markdown.
 
 Положите файл `SOLUTION.md` или `SOLUTION.pdf` в папку `sync-rb`, запушьте в ветку `sync-rb` и откройте pull-request в `master`.
