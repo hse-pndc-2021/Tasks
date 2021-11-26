@@ -111,3 +111,5 @@ git push -u origin task-name
 Оценка для студентов МФТИ: `clamp(floor(IR*7 + 3), 1, 10)`
 
 Оценка для студентов ВШЭ: `clamp(floor(IR*6 + 4), 1, 10)`
+
+![assessment](https://raw.githubusercontent.com/hse-pndc-2021/Tasks/master/assessment.png)
