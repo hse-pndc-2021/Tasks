@@ -7,6 +7,7 @@
 
 1. [blocking-queue](https://github.com/hse-pndc-2021/Tasks/tree/master/blocking-queue)
 2. [mutex](https://github.com/hse-pndc-2021/Tasks/tree/master/mutex)
+3. [sync-rb](https://github.com/hse-pndc-2021/Tasks/tree/master/sync-rb)
 
 # Подготовка окружения
 
